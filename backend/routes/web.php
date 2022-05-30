@@ -19,6 +19,7 @@ use App\Http\Controllers\FilmController;
 |
 */
 
+// Public routes
 Route::get('/', function() {
     return redirect()->route('home');
 });
@@ -27,10 +28,16 @@ Route::get('/what-we-do', [HomeController::class, 'vision'])->name('vision');
 Route::get('/who-we-are', [HomeController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/works', [HomeController::class, 'works'])->name('works');
 
+Route::resource('roles', RoleController::class);
+Route::resource('users', UserController::class);
+Route::resource('films', FilmController::class);
+
 Auth::routes();
 
+// Protected routes
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('films', FilmController::class);
 });
+
